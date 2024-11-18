@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package services;
+
+option go_package="./services";
+
+service Player{
+    rpc Hello(HelloRequest) returns(HelloResponse);
+    rpc Avg(stream AvgRequest) returns(AvgResponse); 
+    rpc Sum(stream SumRequest) returns(stream SumResponse);
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string results = 1;
+}
+
+message AvgRequest {
+    double number =1;
+}
+
+message AvgResponse {
+    double results =1;
+}
+
+message SumRequest {
+    int32 number = 1;
+}
+
+message SumResponse {
+    int32 results = 1;
+}
