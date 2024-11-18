@@ -1,0 +1,12 @@
+kafka:
+  servers:
+    - localhost:9092
+  group: accountConsumer
+
+db:
+  driver: postgres
+  name: mydatabase
+  host: localhost
+  port: 5432
+  username: postgres  # Change this to 'postgres' if you want the default superuser
+  password: mypassword
