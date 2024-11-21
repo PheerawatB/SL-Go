@@ -1,9 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"producer/controllers"
+	"producer/services"
 
 	"github.com/IBM/sarama"
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -14,15 +16,14 @@ func main() {
 	}
 	defer producer.Close()
 
-	msg := sarama.ProducerMessage{
-		Topic: "frankhello",
-		Value: sarama.StringEncoder("Jang Hello"),
-	}
+	eventProducer := services.NewEventProducer(producer)
+	accountService := services.NewAccountService(eventProducer)
+	accountController := controllers.NewOpenAccountController(accountService)
 
-	partition, offset, err := producer.SendMessage(&msg)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("partition: %v offset: %v\n", partition, offset)
-
+	app := fiber.New()
+	app.Post("/openAccounts", accountController.OpenAccount)
+	app.Post("/depositFund", accountController.DepositFunds)
+	app.Post("/withdrawFund", accountController.WithdrawFunds)
+	app.Post("/closeAccount", accountController.CloseAccount)
+	app.Listen(":8080")
 }

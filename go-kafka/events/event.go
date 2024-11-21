@@ -9,11 +9,14 @@ var Topics = []string{
 	reflect.TypeOf(ClosedAccountEvent{}).Name(),
 }
 
+type Event interface {
+}
+
 type OpenAccountEvent struct {
 	ID             string
 	AccountHolders string
 	AccountType    int
-	OpeningBakance float64
+	OpeningBalance float64
 }
 
 type DepositFundEvent struct {

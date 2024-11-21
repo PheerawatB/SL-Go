@@ -33,7 +33,7 @@ func (h *accountEventHandler) Handle(topic string, eventBytes []byte) {
 			ID:            event.ID,
 			AccountHolder: event.AccountHolders,
 			AccountType:   event.AccountType,
-			Balance:       event.OpeningBakance,
+			Balance:       event.OpeningBalance,
 		}
 		err = h.accountRepo.Save(bankAccount)
 		if err != nil {
